@@ -16,6 +16,8 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet"
     />
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
     <link lang="sass" rel="stylesheet" href="./static/styles/main.css" />
     <link rel="icon" href="./static/img/favicon.ico" type="image/x-icon" />
@@ -92,6 +94,34 @@
         <p>Description of the program and any notable achievements.</p>
       </div>
     </div>
-    
+
+    <div class="map">
+      <h2>Cool Locations/Countries I Visited</h2>
+      <div id="map"></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+      var map = L.map("map").setView([20, 0], 2);
+
+      // Title layer
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      L.marker([41.8781, -87.6298])
+        .addTo(map)
+        .bindPopup("<b>Chicago, Illinois, USA</b><br>Population: 2.7 million")
+        .openPopup();
+
+      L.marker([23.6345, -102.5528])
+        .addTo(map)
+        .bindPopup("<b>Mexico</b><br>Population: 126 million")
+        .openPopup();
+
+      // L.marker([LATITUDE, LONGITUDE]).addTo(map)
+      //     .bindPopup('<b>LOCATION</b><br />Description.').openPopup();
+    </script>
   </body>
 </html>
