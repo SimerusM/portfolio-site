@@ -1,0 +1,13 @@
+<!-- Extending the index file to include the top banner -->
+{% extends 'index.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+<!-- Template to display the specific content we want to display -->
+{% block content %}
+<ul>
+  {% for item in items %}
+    <li>{{ item }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}

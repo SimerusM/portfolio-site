@@ -1,0 +1,7 @@
+<nav>
+    <ul>
+        {% for page in pages %}
+            <li><a href="{{ url_for(page.endpoint) }}">{{ page.name }}</a></li>
+        {% endfor %}
+    </ul>
+</nav>
