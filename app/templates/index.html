@@ -27,11 +27,7 @@
   <body>
     <header class="nav-bar">
       <div class="nav-content">
-        <a href="/">
-          <div class="nav-logo">
-            <img src="./static/img/logo.svg" />
-          </div>
-        </a>
+        {% include 'navbar.html' %}
       </div>
     </header>
 
@@ -42,86 +38,76 @@
       <h1>{{ title }}</h1>
     </div>
 
-    <div class="about">
-      <h2>About Me</h2>
-      <p>
-        Hello! I am [Your Name], a passionate individual with a background in
-        [Your Background]. I love [Your Interests]. Currently, I am working on
-        enhancing my skills in [Skills/Areas of Expertise].
-      </p>
-    </div>
-
-    <div class="work-experience">
-      <h2>Previous Work Experiences</h2>
-      <div class="work-item">
-        <h3>Job Title 1</h3>
-        <p><strong>Company Name 1</strong></p>
-        <p>Duration: [Start Date] - [End Date]</p>
-        <p>Description of the job and your responsibilities.</p>
+    {% block content %}
+      <div class="about">
+        <h2>About Me</h2>
+        <p>
+          Hello! I am [Your Name], a passionate individual with a background in
+          [Your Background]. I love [Your Interests]. Currently, I am working on
+          enhancing my skills in [Skills/Areas of Expertise].
+        </p>
       </div>
-      <div class="work-item">
-        <h3>Job Title 2</h3>
-        <p><strong>Company Name 2</strong></p>
-        <p>Duration: [Start Date] - [End Date]</p>
-        <p>Description of the job and your responsibilities.</p>
+
+      <div class="work-experience">
+        <h2>Previous Work Experiences</h2>
+        <div class="work-item">
+          <h3>Job Title 1</h3>
+          <p><strong>Company Name 1</strong></p>
+          <p>Duration: [Start Date] - [End Date]</p>
+          <p>Description of the job and your responsibilities.</p>
+        </div>
+        <div class="work-item">
+          <h3>Job Title 2</h3>
+          <p><strong>Company Name 2</strong></p>
+          <p>Duration: [Start Date] - [End Date]</p>
+          <p>Description of the job and your responsibilities.</p>
+        </div>
       </div>
-    </div>
 
-    <div class="hobbies">
-      <h2>Hobbies</h2>
-      <div class="hobby-item">
-        <img src="./static/img/hobby1.jpg" alt="Hobby 1" />
-        <p>Hobby 1 description.</p>
+      <div class="education">
+        <h2>Education</h2>
+        <div class="education-item">
+          <h3>Degree Name 1</h3>
+          <p><strong>Institution Name 1</strong></p>
+          <p>Duration: [Start Date] - [End Date]</p>
+          <p>Description of the program and any notable achievements.</p>
+        </div>
+        <div class="education-item">
+          <h3>Degree Name 2</h3>
+          <p><strong>Institution Name 2</strong></p>
+          <p>Duration: [Start Date] - [End Date]</p>
+          <p>Description of the program and any notable achievements.</p>
+        </div>
       </div>
-      <div class="hobby-item">
-        <img src="./static/img/hobby2.jpg" alt="Hobby 2" />
-        <p>Hobby 2 description.</p>
+
+      <div class="map">
+        <h2>Cool Locations/Countries I Visited</h2>
+        <div id="map"></div>
       </div>
-    </div>
 
-    <div class="education">
-      <h2>Education</h2>
-      <div class="education-item">
-        <h3>Degree Name 1</h3>
-        <p><strong>Institution Name 1</strong></p>
-        <p>Duration: [Start Date] - [End Date]</p>
-        <p>Description of the program and any notable achievements.</p>
-      </div>
-      <div class="education-item">
-        <h3>Degree Name 2</h3>
-        <p><strong>Institution Name 2</strong></p>
-        <p>Duration: [Start Date] - [End Date]</p>
-        <p>Description of the program and any notable achievements.</p>
-      </div>
-    </div>
+      <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+      <script>
+        var map = L.map("map").setView([20, 0], 2);
 
-    <div class="map">
-      <h2>Cool Locations/Countries I Visited</h2>
-      <div id="map"></div>
-    </div>
+        // Title layer
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
 
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-      var map = L.map("map").setView([20, 0], 2);
+        L.marker([41.8781, -87.6298])
+          .addTo(map)
+          .bindPopup("<b>Chicago, Illinois, USA</b><br>Population: 2.7 million")
+          .openPopup();
 
-      // Title layer
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      }).addTo(map);
+        L.marker([23.6345, -102.5528])
+          .addTo(map)
+          .bindPopup("<b>Mexico</b><br>Population: 126 million")
+          .openPopup();
 
-      L.marker([41.8781, -87.6298])
-        .addTo(map)
-        .bindPopup("<b>Chicago, Illinois, USA</b><br>Population: 2.7 million")
-        .openPopup();
-
-      L.marker([23.6345, -102.5528])
-        .addTo(map)
-        .bindPopup("<b>Mexico</b><br>Population: 126 million")
-        .openPopup();
-
-      // L.marker([LATITUDE, LONGITUDE]).addTo(map)
-      //     .bindPopup('<b>LOCATION</b><br />Description.').openPopup();
-    </script>
+        // L.marker([LATITUDE, LONGITUDE]).addTo(map)
+        //     .bindPopup('<b>LOCATION</b><br />Description.').openPopup();
+      </script>
+    {% endblock %}
   </body>
 </html>

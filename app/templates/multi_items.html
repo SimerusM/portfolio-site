@@ -1,0 +1,24 @@
+<!-- Extending the index file to include the top banner -->
+{% extends 'index.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+<!-- Template to display the specific content we want to display -->
+{% block content %}
+<div class="general-div">
+    <h2>{{ title }}</h2>
+    <ul>
+        {% for item in items %}
+            <li>
+                <!-- Only display provided images for hobby page -->
+                {% if images %}
+                    <img src="{{ images[loop.index0] }}" alt="{{ item }}" class="hobby-image">
+                {% endif %}
+
+                <!-- Display items passed in as normal -->
+                {{ item }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
