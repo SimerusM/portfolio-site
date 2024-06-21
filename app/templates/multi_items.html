@@ -9,7 +9,15 @@
     <h2>{{ title }}</h2>
     <ul>
         {% for item in items %}
-            <li>{{ item }}</li>
+            <li>
+                <!-- Only display provided images for hobby page -->
+                {% if images %}
+                    <img src="{{ images[loop.index0] }}" alt="{{ item }}" class="hobby-image">
+                {% endif %}
+
+                <!-- Display items passed in as normal -->
+                {{ item }}
+            </li>
         {% endfor %}
     </ul>
 </div>

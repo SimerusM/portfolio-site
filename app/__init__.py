@@ -17,8 +17,15 @@ def index():
 
 @app.route('/hobbies')
 def hobbies():
+    # Next step, create a specific hobbies file to read from
     hobbies_list = ['Reading', 'Hiking', 'Programming', 'Photography']
-    return render_template('multi_items.html', title="Hobbies", items=hobbies_list)
+    hobbies_images = [
+        './static/img/hobby1.jpg',
+        './static/img/hobby1.jpg',
+        './static/img/hobby1.jpg',
+        './static/img/hobby1.jpg'
+    ]
+    return render_template('multi_items.html', title="Hobbies", items=hobbies_list, images=hobbies_images)
 
 @app.context_processor
 def inject_pages():
