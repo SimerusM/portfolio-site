@@ -81,3 +81,11 @@ def delete_time_line_post():
         return "Deleted"
     except:
         return "Error"
+    
+@app.route('/timeline')
+def timeline():
+    timeline_posts = [
+        model_to_dict(post)
+        for post in TimelinePost.select().order_by(TimelinePost.created_at.desc())
+    ]
+    return render_template('timeline.html', title="Timeline", timeline_posts=timeline_posts)

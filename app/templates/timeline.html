@@ -1,0 +1,71 @@
+<!-- Extending the index file to include the top banner -->
+{% extends 'index.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+<!-- Template to display the specific content we want to display -->
+{% block content %}
+<div class="general-div">
+    <h2>{{ title }}</h2>
+    
+    <!-- Form to submit a new timeline post -->
+    <form id="timelineForm" action="/api/timeline_post" method="post">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="content">Content:</label>
+            <textarea id="content" name="content" required></textarea>
+        </div>
+        <button type="submit" class="btn">Submit</button>
+    </form>
+    
+    <!-- Display timeline posts -->
+    <h3>Timeline Posts</h3>
+    <ul id="timelinePosts" class="timeline-list">
+        {% for post in timeline_posts %}
+            <li class="timeline-item">
+                <p><strong>{{ post.name }}</strong> ({{ post.email }})</p>
+                <p>{{ post.content }}</p>
+                <p><em>{{ post.created_at }}</em></p>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<script>
+    // Use fetch API to handle form submission and update the posts list
+    document.getElementById('timelineForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        
+        const formData = new FormData(this);
+        
+        fetch('/api/timeline_post', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Append the new post to the timeline posts list
+            const postList = document.getElementById('timelinePosts');
+            const newPost = document.createElement('li'); // make it a list item
+            newPost.classList.add('timeline-item'); // add styling
+            newPost.innerHTML = `
+                <p><strong>${data.name}</strong> (${data.email})</p>
+                <p>${data.content}</p>
+                <p><em>${data.created_at}</em></p>
+            `;
+            postList.prepend(newPost); // Add the new post at the beginning of the list
+            
+            // Reset the form
+            this.reset();
+        })
+        .catch(error => console.error('Error:', error));
+    });
+</script>
+{% endblock %}
