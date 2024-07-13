@@ -31,7 +31,8 @@ mydb.create_tables([TimelinePost])
 # List of pages, update this list for dynamic page adding
 pages = [
     {'name': 'Home', 'endpoint': 'index'},
-    {'name': 'Hobbies', 'endpoint': 'hobbies'}
+    {'name': 'Hobbies', 'endpoint': 'hobbies'},
+    {'name': 'Timeline', 'endpoint': 'timeline'}
 ]
 
 @app.route('/')
