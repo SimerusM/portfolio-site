@@ -12,15 +12,18 @@
     <form id="timelineForm" action="/api/timeline_post" method="post">
         <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name">
+            <span class="error-message" id="nameError"></span>
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email">
+            <span class="error-message" id="emailError"></span>
         </div>
         <div class="form-group">
             <label for="content">Content:</label>
-            <textarea id="content" name="content" required></textarea>
+            <textarea id="content" name="content"></textarea>
+            <span class="error-message" id="contentError"></span>
         </div>
         <button type="submit" class="btn">Submit</button>
     </form>
@@ -42,6 +45,11 @@
     // Use fetch API to handle form submission and update the posts list
     document.getElementById('timelineForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent the default form submission
+
+        // Clear previous error messages
+        document.getElementById('nameError').textContent = '';
+        document.getElementById('emailError').textContent = '';
+        document.getElementById('contentError').textContent = '';
         
         const formData = new FormData(this);
         
@@ -49,7 +57,12 @@
             method: 'POST',
             body: formData,
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => Promise.reject(err));
+            }
+            return response.json();
+        })
         .then(data => {
             // Append the new post to the timeline posts list
             const postList = document.getElementById('timelinePosts');
@@ -65,7 +78,18 @@
             // Reset the form
             this.reset();
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.log('Error:', error)
+            if (error['name'] == "Invalid name") {
+                document.getElementById('nameError').textContent = 'Invalid name';
+            } 
+            if (error['email'] == "Invalid email") {
+                document.getElementById('emailError').textContent = 'Invalid email';
+            } 
+            if (error['content'] == "Invalid content") {
+                document.getElementById('contentError').textContent = 'Invalid content';
+            }
+        });
     });
 </script>
 {% endblock %}
